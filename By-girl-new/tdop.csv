@@ -1,0 +1,5 @@
+Skill,Cooking Value,Cooking t-weight,Cooking d-weight,Cleaning Value,Cleaning t-weight,Cleaning d-weight,Inventory Value,Inventory t-weight,Inventory d-weight,Serving Value,Serving t-weight,Serving d-weight,Row Total,Row t-weight,Row d-weight
+Chefs,12.00,66.67%,63.16%,3.00,16.67%,20.00%,2.00,11.11%,33.33%,1.00,5.56%,5.26%,18.00,100.00%,30.51%
+Helpers,5.00,22.73%,26.32%,8.00,36.36%,53.33%,3.00,13.64%,50.00%,6.00,27.27%,31.58%,22.00,100.00%,37.29%
+Waiters,2.00,10.53%,10.53%,4.00,21.05%,26.67%,1.00,5.26%,16.67%,12.00,63.16%,63.16%,19.00,100.00%,32.20%
+Total,19.00,32.20%,100.00%,15.00,25.42%,100.00%,6.00,10.17%,100.00%,19.00,32.20%,100.00%,59.00,100.00%,100.00%

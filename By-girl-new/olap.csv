@@ -1,0 +1,10 @@
+Region,Product,Month,Sales
+North,TV,Jan,1200
+North,TV,Feb,1500
+North,AC,Jan,1800
+South,TV,Jan,1300
+South,AC,Feb,2000
+East,TV,Jan,1100
+East,AC,Feb,1700
+West,TV,Jan,1600
+West,AC,Feb,1900
