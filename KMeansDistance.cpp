@@ -157,3 +157,184 @@ int main() {
 
     return 0;
 }
+// ==================================================================================================
+// 🔹 DETAILED EXPLANATION OF K-MEANS CLUSTERING PROGRAM
+// ==================================================================================================
+//
+// 🧩 PURPOSE:
+// This program implements the **K-Means Clustering Algorithm** — a fundamental **unsupervised learning**
+// technique used in data mining to group data points into *k clusters* based on similarity.
+//
+// The algorithm minimizes the distance between data points and their assigned cluster centroids,
+// effectively finding “natural groupings” in data without predefined labels.
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 1️⃣ FUNCTION OVERVIEW
+// --------------------------------------------------------------------------------------------------
+//
+// ➤ distanceCalc()
+//     - Computes the **Euclidean distance** between two data points in n-dimensional space.
+//     - Formula: 
+//           d(A, B) = √[(a₁−b₁)² + (a₂−b₂)² + ... + (an−bn)²]
+//     - Used to measure similarity — smaller distance → higher similarity.
+//
+// ➤ readCSV()
+//     - Reads data from a CSV file.
+//     - Each row is converted into a vector of numeric attributes (features).
+//     - Also stores optional row labels (like A, B, C) for readability.
+//     - Skips header line automatically.
+//
+// ➤ kMeans()
+//     - Implements the full **K-Means algorithm**.
+//     - Steps:
+//         1️⃣ Initialize centroids.
+//         2️⃣ Assign each data point to the nearest centroid.
+//         3️⃣ Recalculate centroids as mean of assigned points.
+//         4️⃣ Repeat until centroids do not change (convergence).
+//
+// ➤ main()
+//     - Accepts filename and number of clusters (k) from user.
+//     - Reads data, calls `kMeans()`, and displays cluster results.
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 2️⃣ K-MEANS ALGORITHM LOGIC (STEP-BY-STEP)
+// --------------------------------------------------------------------------------------------------
+//
+// STEP 1️⃣ → Initialization
+//     - Choose number of clusters (k) from user.
+//     - Select first k data points as initial centroids.
+//
+// STEP 2️⃣ → Assignment Step
+//     - For each data point, compute distance to all centroids.
+//     - Assign the point to the cluster whose centroid is closest (minimum distance).
+//
+// STEP 3️⃣ → Update Step
+//     - For each cluster, compute the new centroid as the **mean** of all points assigned to that cluster.
+//     - Formula:
+//           Centroid_j = (Σ points in cluster_j) / (number of points in cluster_j)
+//
+// STEP 4️⃣ → Convergence Check
+//     - If no points change their assigned clusters → centroids have stabilized → stop.
+//     - Otherwise, repeat assignment and update steps.
+//
+// STEP 5️⃣ → Output
+//     - Print iteration details, centroids, and final cluster memberships.
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 3️⃣ EXAMPLE RUN (ILLUSTRATION)
+// --------------------------------------------------------------------------------------------------
+//
+// Input CSV (Example):
+//     Name,X,Y
+//     A,2,3
+//     B,3,3
+//     C,6,8
+//     D,7,9
+//
+// User Input:
+//     Enter number of clusters: 2
+//
+// Output (Example):
+//     Initial Centroids:
+//     Centroid 1: 2.00 3.00
+//     Centroid 2: 3.00 3.00
+//
+//     --- Iteration 1 ---
+//     Point A -> Cluster 1 (Distance: 0.00)
+//     Point B -> Cluster 1 (Distance: 1.00)
+//     Point C -> Cluster 2 (Distance: 6.40)
+//     Point D -> Cluster 2 (Distance: 7.07)
+//
+//     Updated Centroids:
+//     Centroid 1: 2.50 3.00
+//     Centroid 2: 6.50 8.50
+//
+//     Centroids stabilized - stopping iterations.
+//
+//     Final Cluster Assignments:
+//     A - Cluster 1
+//     B - Cluster 1
+//     C - Cluster 2
+//     D - Cluster 2
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 4️⃣ INTERNAL VARIABLE DESCRIPTION
+// --------------------------------------------------------------------------------------------------
+//
+// data[][]       → Numeric data points (each row = 1 point).
+// names[]        → Optional point labels (for display).
+// k              → Number of clusters (user input).
+// centroids[][]  → Current cluster centers.
+// cluster[]      → Stores which cluster each data point belongs to.
+// changed        → Boolean flag that tracks if any point changed its cluster assignment.
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 5️⃣ CHARACTERISTICS OF K-MEANS CLUSTERING
+// --------------------------------------------------------------------------------------------------
+//
+// ✅ **Type:** Unsupervised Learning (no class labels required).
+// ✅ **Goal:** Minimize within-cluster variance (points inside a cluster are close to each other).
+// ✅ **Input:** Dataset with numeric features + number of clusters (k).
+// ✅ **Output:** Cluster assignments for each data point + centroid positions.
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 6️⃣ ADVANTAGES OF K-MEANS
+// --------------------------------------------------------------------------------------------------
+//
+// • Simple and efficient algorithm for large datasets.
+// • Works well for spherical (convex-shaped) clusters.
+// • Fast convergence using Euclidean distance.
+// • Easy to interpret and visualize.
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 7️⃣ LIMITATIONS OF K-MEANS
+// --------------------------------------------------------------------------------------------------
+//
+// ⚠️ Must specify the number of clusters (k) in advance.
+// ⚠️ Sensitive to initial centroid positions (can lead to different results).
+// ⚠️ Struggles with non-spherical clusters or varying densities.
+// ⚠️ Outliers can distort centroids significantly.
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 8️⃣ WHY K-MEANS WAS CHOSEN (JUSTIFICATION)
+// --------------------------------------------------------------------------------------------------
+//
+// 🔹 Dataset Nature:
+//     - Data consists of **continuous numerical attributes** (e.g., salary, marks, coordinates, etc.).
+//     - No predefined class labels (unsupervised learning problem).
+//
+// 🔹 Objective:
+//     - Group similar data points based on Euclidean distance.
+//     - Discover underlying structure or natural grouping in data.
+//
+// 🔹 Why K-Means Fits Perfectly:
+//     1️⃣ Automatically divides data into k groups.
+//     2️⃣ Efficient for moderate to large numeric datasets.
+//     3️⃣ Provides clear numeric centroids for each cluster.
+//     4️⃣ One of the most widely used and interpretable clustering algorithms.
+//
+// 🔹 Comparison with Other Methods:
+//     - **DBSCAN:** Detects arbitrary-shaped clusters and noise, but needs eps and minPts tuning.
+//     - **Hierarchical Clustering:** Computationally heavier for large data.
+//     - ✅ **K-Means:** Simpler, faster, and easy to visualize cluster separation.
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 9️⃣ CONCLUSION
+// --------------------------------------------------------------------------------------------------
+//
+// ➤ The K-Means algorithm successfully groups similar data points into k clusters.
+// ➤ Each cluster is represented by its centroid — the mean position of all points within it.
+// ➤ The process iteratively refines centroids until stabilization (no more reassignments).
+// ➤ Output provides final cluster memberships and centroids.
+//
+// ➤ Example Conclusion Statement:
+//     “K-Means clustered the dataset into 2 groups based on Euclidean distance.
+//      The algorithm converged after 3 iterations with stable centroids.”
+//
+// --------------------------------------------------------------------------------------------------
+// ✅ FINAL REMARK:
+// This experiment demonstrates **Unsupervised Learning via K-Means Clustering** —
+// a foundational data mining technique for pattern discovery.  
+// It effectively groups data points with similar characteristics without prior class information.
+//
+// ==================================================================================================

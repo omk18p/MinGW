@@ -235,3 +235,214 @@ int main() {
 
     return 0;
 }
+// ==================================================================================================
+// 🔹 DETAILED EXPLANATION OF DATA NORMALIZATION TECHNIQUES PROGRAM
+// ==================================================================================================
+//
+// 🧩 PURPOSE:
+// This program demonstrates **three major Data Normalization techniques** used in **Data Preprocessing**
+// to scale numeric data into a specific range or format before applying data mining or ML algorithms.
+//
+// Normalization ensures that all features contribute equally and prevents attributes with large
+// numerical ranges from dominating smaller ones.
+//
+// Techniques implemented:
+//   1️⃣ Min-Max Normalization
+//   2️⃣ Z-Score Normalization (Standardization)
+//   3️⃣ Decimal Scaling Normalization
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 1️⃣ FUNCTION OVERVIEW
+// --------------------------------------------------------------------------------------------------
+//
+// ➤ split()
+//     - Splits each line from the CSV file using commas as delimiters.
+//     - Returns a vector of string tokens (each representing a column value).
+//
+// ➤ isNumeric()
+//     - Checks whether a given string value is numeric.
+//     - Used to skip textual headers or string-type columns.
+//
+// ➤ readCSV()
+//     - Reads a CSV file and stores numeric data in a 2D vector `data`.
+//     - Automatically detects if the first line contains column headers.
+//
+// ➤ calcStats()
+//     - Computes for each numeric column:
+//           ▪ Minimum value (minVal)
+//           ▪ Maximum value (maxVal)
+//           ▪ Mean value (meanVal)
+//           ▪ Standard deviation (stdVal)
+//     - These statistics are essential for normalization formulas.
+//
+// ➤ minMaxNorm()
+//     - Applies **Min-Max Normalization** using the formula:
+//           X' = ((X - Min) / (Max - Min)) * (NewMax - NewMin) + NewMin
+//     - Scales all values to a user-defined range (e.g., [0, 1] or [-1, 1]).
+//
+// ➤ zScoreNorm()
+//     - Applies **Z-Score Normalization (Standardization)** using the formula:
+//           X' = (X - Mean) / StdDev
+//     - Centers data around zero with a standard deviation of 1.
+//
+// ➤ decScaleNorm()
+//     - Applies **Decimal Scaling Normalization** using the formula:
+//           X' = X / 10^k
+//       where k is the smallest integer such that max(|X'|) < 1.
+//
+// ➤ showData()
+//     - Displays the first few normalized rows for quick verification.
+//
+// ➤ saveCSV()
+//     - Saves normalized data into separate CSV files for each method.
+//
+// ➤ main()
+//     - Handles user interaction, method selection, and file saving.
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 2️⃣ STEP-BY-STEP EXECUTION
+// --------------------------------------------------------------------------------------------------
+//
+// STEP 1️⃣ → INPUT
+//     - The user enters the CSV file name.
+//     - The program reads numeric columns and ignores text-based columns (like labels or IDs).
+//
+// Example Input CSV:
+//     Age, Income, Score
+//     25, 50000, 70
+//     30, 60000, 90
+//     45, 80000, 85
+//
+// STEP 2️⃣ → STATISTICS CALCULATION
+//     - The program computes column-wise Min, Max, Mean, and StdDev.
+//
+// Example Output:
+//     Age -> Min=25, Max=45, Mean=33.33, StdDev=8.49
+//     Income -> Min=50000, Max=80000, Mean=63333.3, StdDev=12472.2
+//     Score -> Min=70, Max=90, Mean=81.67, StdDev=8.50
+//
+// STEP 3️⃣ → METHOD SELECTION
+//     - User selects one of the following:
+//           1 → Min-Max
+//           2 → Z-Score
+//           3 → Decimal Scaling
+//           4 → All Methods
+//
+// STEP 4️⃣ → NORMALIZATION
+//
+// ▪ **Min-Max Normalization**
+//     Formula: X' = ((X - Min) / (Max - Min)) * (NewMax - NewMin) + NewMin
+//     Example (for [0,1] range):
+//         Age = (25 - 25) / (45 - 25) = 0
+//         Income = (50000 - 50000) / (80000 - 50000) = 0
+//         Score = (70 - 70) / (90 - 70) = 0
+//
+// ▪ **Z-Score Normalization**
+//     Formula: X' = (X - Mean) / StdDev
+//     Example:
+//         Age = (25 - 33.33) / 8.49 = -0.981
+//         Income = (50000 - 63333.3) / 12472.2 = -1.070
+//         Score = (70 - 81.67) / 8.50 = -1.373
+//
+// ▪ **Decimal Scaling Normalization**
+//     Formula: X' = X / 10^k, where k = smallest integer s.t. max(|X'|) < 1
+//     Example:
+//         For Income (max = 80000), k = ceil(log10(80000+1)) = 5
+//         So, Income = 50000 / 10^5 = 0.5
+//
+// STEP 5️⃣ → OUTPUT
+//     - Displays a preview of normalized data.
+//     - Saves results to separate CSV files:
+//         → minmax_normalized.csv
+//         → zscore_normalized.csv
+//         → decimalscaling_normalized.csv
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 3️⃣ FORMULAS USED
+// --------------------------------------------------------------------------------------------------
+//
+// ▪ Min-Max Normalization:
+//       X' = ((X - Min) / (Max - Min)) * (NewMax - NewMin) + NewMin
+//
+// ▪ Z-Score Normalization:
+//       X' = (X - Mean) / StdDev
+//
+// ▪ Decimal Scaling Normalization:
+//       X' = X / 10^k,  where k = ceil(log10(Max(|X|) + 1))
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 4️⃣ USE CASES AND SIGNIFICANCE
+// --------------------------------------------------------------------------------------------------
+//
+// 🔹 Why Normalization is Needed:
+//     - Many data mining algorithms (e.g., K-Means, KNN, Neural Networks) are distance-based.
+//     - Attributes with larger ranges dominate smaller ones without normalization.
+//     - Normalization brings all features to a **comparable scale**.
+//
+// 🔹 Typical Use Cases:
+//     - Preprocessing before clustering (e.g., K-Means, DBSCAN).
+//     - Data preparation for Machine Learning models.
+//     - Feature scaling in predictive analytics.
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 5️⃣ COMPARISON OF METHODS
+// --------------------------------------------------------------------------------------------------
+//
+// | Technique               | Range / Distribution     | When to Use                                         |
+// |--------------------------|--------------------------|-----------------------------------------------------|
+// | Min-Max Normalization    | [newMin, newMax] (usually [0,1]) | When minimum and maximum values are known.           |
+// | Z-Score Normalization    | Mean = 0, StdDev = 1     | When data distribution varies or contains outliers. |
+// | Decimal Scaling          | Depends on magnitude     | When you want a simple scale-based normalization.   |
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 6️⃣ ADVANTAGES
+// --------------------------------------------------------------------------------------------------
+//
+// ✅ All techniques reduce feature magnitude differences.
+// ✅ Makes models converge faster and perform better.
+// ✅ Simple, efficient, and easily interpretable.
+// ✅ Handles datasets of varying scales and ranges.
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 7️⃣ LIMITATIONS
+// --------------------------------------------------------------------------------------------------
+//
+// ⚠️ Min-Max Normalization: Sensitive to outliers.
+// ⚠️ Z-Score Normalization: Requires normally distributed data for best results.
+// ⚠️ Decimal Scaling: Simple but less precise for diverse ranges.
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 8️⃣ WHY THESE METHODS WERE CHOSEN (JUSTIFICATION)
+// --------------------------------------------------------------------------------------------------
+//
+// 🔹 Objective:
+//     - To demonstrate key **data preprocessing methods** that prepare datasets for data mining algorithms.
+//
+// 🔹 Why These Three:
+//     1️⃣ They represent the **three most common normalization approaches**.
+//     2️⃣ Each one scales data differently, showing varied effects.
+//     3️⃣ They are foundational in **data cleaning and transformation** steps.
+//
+// 🔹 Importance in Data Mining:
+//     - Normalization improves clustering and classification accuracy by reducing bias.
+//     - Helps in creating balanced, comparable feature spaces.
+//
+// --------------------------------------------------------------------------------------------------
+// 🔸 9️⃣ CONCLUSION
+// --------------------------------------------------------------------------------------------------
+//
+// ➤ This experiment successfully demonstrates **three major normalization methods**.
+// ➤ It computes descriptive statistics and scales the dataset accordingly.
+// ➤ Results are stored in CSV files for further analysis.
+//
+// Example Conclusion Statement:
+//     “Normalization was applied to the dataset using Min-Max, Z-Score, and Decimal Scaling methods.
+//      Each method transformed the original data into a comparable scale, improving suitability for
+//      data mining algorithms such as K-Means and Naïve Bayes.”
+//
+// --------------------------------------------------------------------------------------------------
+// ✅ FINAL REMARK:
+// This program effectively illustrates **Data Preprocessing in Data Mining**, focusing on normalization.
+// It standardizes raw data into defined scales, enhancing model performance and interpretability.
+//
+// ==================================================================================================
